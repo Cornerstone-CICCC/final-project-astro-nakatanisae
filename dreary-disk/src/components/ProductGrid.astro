@@ -1,0 +1,16 @@
+---
+import { Product } from '../models/Product';
+import ProductCard from './ProductCard.astro';
+
+interface Props {
+  products: Product[];
+}
+
+const { products }: Props = Astro.props;
+---
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-7xl mx-auto">
+  {products.map((product: Product) => (
+    <ProductCard product={product} />
+  ))}
+</div>

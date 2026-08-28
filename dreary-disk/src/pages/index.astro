@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+import { ProductCatalog } from '../models/ProductCatalog';
+import productsData from '../data/products.json';
+const catalog = new ProductCatalog(productsData);
+const products = catalog.getAllProducts();
+---
+
+<Layout title="Jewelry Store | Home">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Our Collection</h1>
+    <p class="text-gray-600">Explore our finest selection of fine jewelry.</p>
+    <label class="mt-4 inline-flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+      <input type="checkbox" id="hide-out-of-stock" />
+      Hide out of stock
+    </label>
+  </div>
+
+  <ProductGrid products={products} />
+  <script>
+    const hideOutOfStock = document.getElementById('hide-out-of-stock');
+    hideOutOfStock.addEventListener('change', (e) => {
+      const products = document.querySelectorAll('.product-card');
+      products.forEach(product => {
+        if(e.target.checked && product.dataset.inStock === 'false'){
+          product.style.display = 'none';
+        } else {
+          product.style.display = '';
+        }
+      });
+    });
+  </script>
+</Layout>
